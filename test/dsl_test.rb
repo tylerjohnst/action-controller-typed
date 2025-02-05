@@ -30,11 +30,11 @@ describe ActionControllerTyped::DSL do
 
     params = contract.params_type
     assert_equal "MockControllerParams", params.name
-    assert_equal :string, params[:first_name].type
+    assert_equal :string, params.fields[:first_name].type
 
     returns = contract.returns_type
     assert_equal "MockControllerReturns", returns.name
-    assert_equal :integer, returns[:id].type
-    assert_equal :string, params[:first_name].type
+    assert_equal :integer, returns.fields[:id].type
+    assert_equal :string, returns.fields[:first_name].type
   end
 end

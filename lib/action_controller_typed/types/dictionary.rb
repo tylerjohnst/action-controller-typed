@@ -1,37 +1,32 @@
 # frozen_string_literal: true
 
-module ActionControllerTyped
-  module DSL
-    class Dictionary
-      class Field
-        attr_reader :name
-        attr_reader :type
+require_relative "field"
 
-        def initialize(name, type:)
-          @name = name
-          @type = type
-        end
+module ActionControllerTyped
+  module Types
+    class Dictionary
+      def self.field(name, type:)
+        fields[name] = Field.new(name, type:)
+      end
+
+      def self.fields
+        @fields ||= {}
       end
 
       attr_reader :name
 
       def self.build(name:, &block)
-        instance = new(name:)
-        instance.instance_eval(&block)
-        instance
+        klass = Class.new(self, &block)
+        klass.define_singleton_method(:name) { name }
+        klass
       end
 
       def initialize(name:)
         @name = name
-        @fields = {}
       end
 
-      def [](name)
-        @fields[name]
-      end
-
-      def field(name, type:)
-        @fields[name] = Field.new(name, type: type)
+      def fields
+        self.class.fields
       end
     end
   end

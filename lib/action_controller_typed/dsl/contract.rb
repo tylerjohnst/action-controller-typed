@@ -21,7 +21,7 @@ module ActionControllerTyped
         if type
           @params_type = type
         else
-          @params_type = Dictionary.build(name:, &block)
+          @params_type = Types::Dictionary.build(name:, &block)
         end
       end
 
@@ -29,7 +29,7 @@ module ActionControllerTyped
         if type
           @returns_type = type
         else
-          @returns_type = Dictionary.build(name:, &block)
+          @returns_type = Types::Dictionary.build(name:, &block)
         end
       end
     end
